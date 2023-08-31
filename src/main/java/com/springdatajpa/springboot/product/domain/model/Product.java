@@ -1,9 +1,6 @@
 package com.springdatajpa.springboot.product.domain.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -15,6 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Entity
 @Table(
     name = "tb_product",
@@ -27,7 +25,15 @@ import java.time.LocalDateTime;
 )
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Not good for JDBC batch operations
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "product_generator"
+    ) // Not good for JDBC batch operations
+    @SequenceGenerator(
+            name = "product_generator",
+            sequenceName = "product_sequence_name",
+            allocationSize = 1
+    )
     private Long id;
     @Column(name = "stock_keeping_unit", nullable = false) // column 에 대한 세세한 설정할 때 사용
     private String sku; // Stuck keeping Unit
