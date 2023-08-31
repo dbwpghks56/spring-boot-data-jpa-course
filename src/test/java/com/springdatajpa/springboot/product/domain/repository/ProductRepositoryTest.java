@@ -26,11 +26,29 @@ class ProductRepositoryTest {
         product.setActive(true);
         product.setImageUrl("product1.png");
 
-        // save product
+        // save product object
         Product saveObject = productRepository.save(product);
 
         // display product info
         System.out.println(saveObject.getId());
         System.out.println(saveObject.toString());
+    }
+
+    @Test
+    void updateUsingSaveMethod() {
+        // find or read product object
+        Long id = 1L;
+        Product product = productRepository.findById(id).get();
+
+        // update product object
+        product.setName("product 1 updated");
+        product.setDescription("product 1 description updated");
+
+        // save updated product object
+        Product updatedProduct = productRepository.save(product);
+
+        // display product info
+        System.out.println(updatedProduct.getId());
+        System.out.println(updatedProduct.toString());
     }
 }
